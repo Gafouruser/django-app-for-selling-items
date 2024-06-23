@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>La boutique de Docstring</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<div class="entete">
+    <img src="{% static 'images/d.jpg' %}" alt="Logo de la boutique" style="width: 100px">
+    <div class="infoConnexion">
+        {% if user.is_authenticated %}
+    <h3><img src="{% static 'images/user.png' %}" alt="Profil" style="width: 20px">{{ user.username }}</h3>
+    <a href="{% url 'logout' %}"><img src="{% static 'images/logout.png' %}" alt="Deconnexion" style="width: 20px">Déconnexion</a>
+{% else %}
+    <p><img src="{% static 'images/login.png' %}" alt="Connexion" style="width: 20px"><a href="{% url 'login' %}"> Connexion</a></p>
+    <p><img src="{% static 'images/signup.png' %}" alt="Inscription" style="width: 20px"><a href="{% url 'signup' %}"> S'inscrire</a></p>
+{% endif %}
+    </div>
+</div>
+
+<div class="boutique"><a href="{% url 'index' %}">
+    <h1>La boutique de Docstring</h1></a>
+    <h3>Aujourd'hui nous sommes le {{ date|date:"d F Y" }}</h3>
+    <h3>Il est actuelement {{ date|date:"H\hi" }}</h3>
+</div>
+
+<h2>Bienvenue sur mon site !</h2>
+
+{% if user.cart %}
+    <p><a href="{% url 'cart' %}">Voir le panier ({{ user.cart.orders.count }})</a></p>
+{% endif %}
+
+{% block content %}
+{% endblock %}
+
+<div class="piedPage">
+    <h3><img src="{% static 'images/copyright.png' %}" alt="Droits d'auteur" style="width: 20px"> Copyrigth Docstring {{ date|date:"Y" }}</h3>
+</div>
+
+</body>
+</html>
